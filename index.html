@@ -66,6 +66,16 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .foot{text-align:center;color:var(--muted);font-size:12.5px;padding:12px 16px 0}
 
 /* ---------- navigation tree ---------- */
+.sbox{position:relative;margin:0 0 12px}
+.sbox input{width:100%;font:inherit;font-size:16px;padding:10px 12px 10px 38px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);min-height:44px}
+.sbox input:focus{outline:2px solid var(--brand);outline-offset:1px}
+.sbox svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted);pointer-events:none}
+.sr-c{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 8px 4px;font-weight:700}
+.srh{display:block;width:100%;border:0;background:none;text-align:left;padding:9px 10px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);min-height:40px}
+.srh:hover{background:var(--surface2)}
+.sempty{color:var(--muted);font-size:14px;margin:8px}
+.sbox.home{max-width:560px}
+.hres{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:8px}
 .side h4{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:4px 8px 10px;display:flex;justify-content:space-between;align-items:center}
 .lv{margin-bottom:6px}
 .lv-h{width:100%;display:flex;align-items:center;gap:10px;border:0;background:none;padding:10px 8px;border-radius:12px;text-align:left;font-weight:700;font-size:14.5px}
@@ -374,7 +384,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 const $=(s,e=document)=>e.querySelector(s), $$=(s,e=document)=>[...e.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-const IC={
+const IC={search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
  prev:'<path d="M15 18l-6-6 6-6"/>',next:'<path d="M9 18l6-6-6-6"/>',
  play:'<path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/>',pause:'<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" stroke="none"/>',
  menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',close:'<path d="M6 6l12 12M18 6L6 18"/>',
@@ -1811,6 +1821,11 @@ READY.push('kn');
 READY.push('te');
 READY.push('ta');
 
+Object.assign(TRUI.hi,{"Search a topic: MCX, algo, options":"विषय खोजें: MCX, algo, options","No matching lesson. Try another word.":"कोई पाठ नहीं मिला। दूसरा शब्द आज़माएँ।"});
+Object.assign(TRUI.kn,{"Search a topic: MCX, algo, options":"ವಿಷಯ ಹುಡುಕಿ: MCX, algo, options","No matching lesson. Try another word.":"ಯಾವುದೇ ಪಾಠ ಸಿಗಲಿಲ್ಲ. ಬೇರೆ ಪದ ಪ್ರಯತ್ನಿಸಿ."});
+Object.assign(TRUI.te,{"Search a topic: MCX, algo, options":"అంశం వెతకండి: MCX, algo, options","No matching lesson. Try another word.":"పాఠం దొరకలేదు. మరో పదం ప్రయత్నించండి."});
+Object.assign(TRUI.ta,{"Search a topic: MCX, algo, options":"தலைப்பைத் தேடுங்கள்: MCX, algo, options","No matching lesson. Try another word.":"பாடம் கிடைக்கவில்லை. வேறு சொல்லை முயலுங்கள்."});
+
 
 const FLOW=[];
 LEVELS.forEach((lv,li)=>lv.chapters.forEach((c,ci)=>c.items.forEach((it,ii)=>FLOW.push({lv,li,ch:c,ci,it,first:ii===0}))));
@@ -1851,12 +1866,53 @@ function setTheme(th){document.documentElement.setAttribute('data-theme',th);SET
 (function(){let th=SET.theme;if(!th){try{th=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch(e){th='light'}}document.documentElement.setAttribute('data-theme',th);
   const m=document.querySelector('meta[name=theme-color]');if(m)m.content=th==='dark'?'#08111F':'#0B1F3A'})();
 
+/* ---------- search ---------- */
+const SEARCH_ALIAS={basic:'l1',basics:'l1',beginner:'l1',beginners:'l1',invest:'l1',investing:'l1',
+ fundamental:'l2',fundamentals:'l2',company:'l2',companies:'l2',
+ technical:'l3',technicals:'l3',chart:'l3',charts:'l3',candle:'l3',candles:'l3',candlestick:'l3',indicator:'l3',indicators:'l3',
+ 'f&o':'l4',fno:'l4',derivative:'l4',derivatives:'l4',future:'l4',futures:'l4',option:'l4',options:'l4',greeks:'l4',
+ strategy:'l5',strategies:'l5',spread:'l5',spreads:'l5',straddle:'l5',
+ algo:'l6',algorithm:'l6',automation:'l6',backtest:'l6',backtesting:'l6',
+ mcx:'l7',commodity:'l7',commodities:'l7',gold:'l7',silver:'l7',crude:'l7',
+ risk:'l8',psychology:'l8',discipline:'l8',journal:'l8',drawdown:'l8'};
+let SIDX=null,SIDXL='';
+function sIndex(){const lg=LANG();if(SIDX&&SIDXL===lg)return SIDX;
+  SIDX=FLOW.map(f=>{const it=f.it;
+    const head=[it.title,titleOf(it),f.ch.title,t(f.ch.title),f.lv.title,t(f.lv.title),f.lv.short].join(' ');
+    const body=[];
+    if(it.type==='lesson')it.scenes.forEach((sc,i)=>{body.push(sc.title,sc.cap);const x=sceneText(it,i);if(x.lang!=='en')body.push(x.title,x.cap)});
+    else it.questions.forEach((q,n)=>{body.push(q.q);const x=quizText(it,n);if(x.lang!=='en')body.push(x.q)});
+    return {head:head.toLowerCase(),blob:(head+' '+body.join(' ')).toLowerCase(),lvl:f.lv.id}});
+  SIDXL=lg;return SIDX}
+function searchFlow(q){const toks=q.trim().toLowerCase().split(/\s+/).filter(Boolean);if(!toks.length)return null;
+  const ix=sIndex(),hits=[];
+  FLOW.forEach((f,i)=>{const e=ix[i];let sc=0,ok=true;
+    for(const k of toks){const al=SEARCH_ALIAS[k]===e.lvl,hd=e.head.includes(k),bl=e.blob.includes(k);
+      if(!(al||bl)){ok=false;break}sc+=(hd?3:0)+(al?2:0)+(bl?1:0)}
+    if(ok)hits.push({i,sc})});
+  const top=hits.filter(h=>h.sc>=2*toks.length);
+  return (top.length?top:hits).map(h=>h.i)}
+function resultsHTML(q){const r=searchFlow(q);if(!r)return '';
+  if(!r.length)return `<p class="sempty">${esc(t('No matching lesson. Try another word.'))}</p>`;
+  let out='',last=null;
+  r.slice(0,80).forEach(i=>{const f=FLOW[i];
+    if(f.ch!==last){last=f.ch;out+=`<div class="sr-c">${esc(t(f.lv.short))} · ${esc(t(f.ch.title))}</div>`}
+    out+=`<button class="srh" data-id="${f.it.id}">${f.it.type==='quiz'&&!/quiz/i.test(f.it.title)?esc(t('Quiz'))+': ':''}${esc(titleOf(f.it))}</button>`});
+  return out}
+function searchBox(cls){const ph=esc(t('Search a topic: MCX, algo, options'));
+  return `<div class="sbox ${cls||''}">${ico('search')}<input class="sq" type="search" autocomplete="off" enterkeyhint="search" placeholder="${ph}" aria-label="${ph}"></div>`}
+function searchBind(box,res,hide){const inp=$('.sq',box);
+  inp.oninput=()=>{const q=inp.value,h=resultsHTML(q);res.innerHTML=h;
+    $$('.srh',res).forEach(b=>b.onclick=()=>{TTS.unlock();closeNav();go(fi(b.dataset.id),{skipIntro:true})});
+    res.style.display=q.trim()?'':'none';hide().forEach(e=>{if(e)e.style.display=q.trim()?'none':''})}}
+
 function renderNav(){
   const cur=curId();
-  side.innerHTML=`<h4>${t('Course map')}<button class="ib" style="width:36px;height:36px;display:grid" id="navClose" aria-label="Hide course map" title="Hide course map">${ico('close')}</button></h4>`+
+  side.innerHTML=`<h4>${t('Course map')}<button class="ib" style="width:36px;height:36px;display:grid" id="navClose" aria-label="Hide course map" title="Hide course map">${ico('close')}</button></h4>`+searchBox()+`<div id="sres"></div><div id="stree">`+
   LEVELS.map(lv=>{const ready=levelItems(lv)>0;const open=P.open[lv.id]!==undefined?P.open[lv.id]:(ready);
    return `<div class="lv ${ready?'live':''} ${open?'open':''}" data-lv="${lv.id}"><button class="lv-h" aria-expanded="${open}"><span class="lv-n">${LEVELS.indexOf(lv)+1}</span><span>${esc(t(lv.short))}</span>${ico('chev','chev')}</button><div class="lv-b">`+
-   lv.chapters.map(c=>`<div class="nc ${c.items.length?'':'soon'}"><div class="nc-t">${esc(t(c.title))}</div>${c.items.map(it=>`<button class="ni ${it.id===cur?'cur':''} ${P.done[it.id]?'done':''}" data-id="${it.id}"><span class="dot">${P.done[it.id]?ico('check'):''}</span>${esc(titleOf(it))}</button>`).join('')}</div>`).join('')+`</div></div>`}).join('');
+   lv.chapters.map(c=>`<div class="nc ${c.items.length?'':'soon'}"><div class="nc-t">${esc(t(c.title))}</div>${c.items.map(it=>`<button class="ni ${it.id===cur?'cur':''} ${P.done[it.id]?'done':''}" data-id="${it.id}"><span class="dot">${P.done[it.id]?ico('check'):''}</span>${esc(titleOf(it))}</button>`).join('')}</div>`).join('')+`</div></div>`}).join('')+`</div>`;
+  searchBind($('.sbox',side),$('#sres'),()=>[$('#stree')]);
   $$('.lv-h',side).forEach(b=>b.onclick=()=>{const lv=b.parentElement,id=lv.dataset.lv,o=!lv.classList.contains('open');lv.classList.toggle('open',o);b.setAttribute('aria-expanded',o);P.open[id]=o;save()});
   $$('.ni',side).forEach(b=>b.onclick=()=>{closeNav();go(fi(b.dataset.id),{skipIntro:true})});
   const nc=$('#navClose');if(nc)nc.onclick=()=>{if(window.innerWidth>=1024)setMap(false);else closeNav()};
@@ -1873,10 +1929,12 @@ function home(){
    <p>${t('Short animated lessons with a friendly voice. Start from zero and grow up to futures, options, algo trading and commodities.')}</p>
    <button class="btn primary lg" id="start">${ico('play')} ${started?t('Continue learning'):t('Start learning')}</button></section>
    <div class="stats"><div class="card stat"><b>${done}/${total}</b><span>${t('Completed')}</span></div><div class="card stat"><b>${lessons}</b><span>${t('Lessons ready')}</span></div><div class="card stat"><b>${LEVELS.length}</b><span>${t('Modules')}</span></div></div>
-   <h2 class="section-t">${t('Course levels')}</h2>
-   <div class="lvgrid">${LEVELS.map((lv,n)=>{const tot=levelItems(lv),dn=levelDone(lv),pr=tot?Math.round(dn/tot*100):0;
+   ${searchBox('home')}<div id="hres" class="hres" style="display:none"></div>
+   <h2 class="section-t" id="hlv">${t('Course levels')}</h2>
+   <div class="lvgrid" id="hgrid">${LEVELS.map((lv,n)=>{const tot=levelItems(lv),dn=levelDone(lv),pr=tot?Math.round(dn/tot*100):0;
     return `<button class="lvc ${tot?'':'soon'}" data-lv="${lv.id}" ${tot?'':'disabled'}><div class="lvc-top"><span class="ring" style="--p:${pr}"><span>${tot?pr+'%':n+1}</span></span><div><h3>${esc(t(lv.title))}</h3><small>${lv.chapters.length} ${t('chapters')}</small></div></div><p>${esc(t(lv.blurb))}</p><span class="tag ${tot?'live':''}">${tot?t('Available'):t('Coming soon')}</span></button>`}).join('')}</div>
    <p class="tip">${t('Tip: use Chrome, Edge, Safari or Firefox and turn the volume up. Tap the language or settings button at the top to change the voice or speed.')}</p>`;
+  searchBind($('.sbox.home',main),$('#hres'),()=>[$('#hlv'),$('#hgrid')]);
   $('#start').onclick=()=>{TTS.unlock();const i=P.last?fi(P.last):0;go(i<0?0:i,{})};
   $$('.lvc:not(.soon)').forEach(b=>b.onclick=()=>{TTS.unlock();const lv=LEVELS.find(l=>l.id===b.dataset.lv);const f=FLOW.findIndex(x=>x.lv===lv);go(f,{})});
   renderNav();chrome();window.scrollTo(0,0);

@@ -70,6 +70,9 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .sbox input{width:100%;font:inherit;font-size:16px;padding:10px 12px 10px 38px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);min-height:44px}
 .sbox input:focus{outline:2px solid var(--brand);outline-offset:1px}
 .sbox svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--muted);pointer-events:none}
+.nlab{display:inline-block;min-width:30px;margin-right:6px;font-size:11px;font-weight:800;color:var(--brand);letter-spacing:.02em}
+.lnum{display:inline-block;font-size:.6em;font-weight:800;color:var(--brand-ink);background:var(--brand);border-radius:8px;padding:2px 9px;vertical-align:middle;margin-right:6px}
+.rsm{margin:10px 0 0;font-size:14px;font-weight:700;opacity:.92}
 .sr-c{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:12px 8px 4px;font-weight:700}
 .srh{display:block;width:100%;border:0;background:none;text-align:left;padding:9px 10px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);min-height:40px}
 .srh:hover{background:var(--surface2)}
@@ -145,7 +148,7 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .segs i{flex:1;height:6px;border-radius:99px;background:var(--surface2)}
 .segs i.on{background:var(--brand)}
 .segs i.now{background:var(--gold)}
-.stage{padding:18px 16px;min-height:clamp(270px,calc(100dvh - 420px),620px);display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;overflow:hidden;background:linear-gradient(180deg,var(--surface),var(--surface2))}
+.stage{padding:18px 16px;min-height:clamp(270px,calc(100dvh - 420px),620px);display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;overflow:hidden;background:linear-gradient(180deg,var(--surface),var(--surface2))}
 .s-title{font-size:clamp(22px,4.4vw,32px);font-weight:800}
 .s-art{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
 .sub{padding:14px 16px;display:flex;gap:12px;align-items:flex-start;font-size:clamp(16px,2.4vw,18px);font-weight:600;min-height:84px;border-left:4px solid var(--gold)}
@@ -323,8 +326,8 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
   .stage{min-height:0}
 }
 /* generic scene styles */
-.gl{display:flex;flex-direction:column;gap:10px;width:100%;max-width:640px}
-.gi{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700;font-size:15.5px;line-height:1.4}
+.gl{display:flex;flex-direction:column;gap:13px;width:100%;max-width:640px}
+.gi{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-weight:700;font-size:15.5px;line-height:1.4}
 .ge{font-size:26px;flex:none;width:38px;text-align:center;line-height:1}
 .sn{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--brand);color:var(--brand-ink);font-size:15px;margin:0 auto}
 .gflow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;width:100%;max-width:680px}
@@ -353,6 +356,50 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .two>*,.grow3>*,.pc-cols>*{min-width:0}
 .grow3 .plant,.two .plant{width:100%;max-width:130px}
 .panel{overflow:hidden}
+/* ---------- motion visuals for text-heavy steps ---------- */
+.vis{width:100%;max-width:640px;height:clamp(84px,15vh,116px);flex:none;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:16px;background:radial-gradient(ellipse at 50% 130%,var(--brand-soft),transparent 72%);position:relative;overflow:hidden}
+.vis svg{height:100%;width:auto;max-width:100%}
+.vt{font-size:clamp(28px,6.5vw,42px);line-height:1;display:inline-block}
+.vt.va{font-size:clamp(20px,4vw,26px);color:var(--muted);font-weight:800;opacity:0;animation:rise .5s ease-out forwards,vnudge 1.4s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .5s)}
+.vt.bob{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vbob 2.2s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.pulse{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vpulse 1.8s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.spin{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vspin 3.2s linear infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .6s)}
+.vt.shake{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vshake 1s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.tilt{font-size:clamp(46px,10vw,64px);animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vtilt 2.6s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.slide{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vslide 2s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.flip{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vflip 2.8s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.grow{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vgrow 2.4s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.shrink{animation:pop .5s cubic-bezier(.3,1.4,.5,1) forwards,vshrink 2.4s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .7s)}
+.vt.drop{opacity:0;animation:vdrop 2s ease-in infinite;animation-delay:var(--d,0s)}
+.vwarn{position:relative;display:grid;place-items:center}
+.vwarn i{position:absolute;width:56px;height:56px;border-radius:50%;border:3px solid var(--agold);opacity:0;animation:vring 1.8s ease-out infinite;animation-delay:var(--d,0s)}
+.vck{display:flex;flex-direction:column;gap:8px;width:min(240px,70%)}
+.vck div{display:flex;align-items:center;gap:10px}
+.vck b{font-size:20px;line-height:1}
+.vck i{height:9px;border-radius:6px;background:var(--line);flex:1;transform-origin:left;transform:scaleX(0);animation:vgrowx .8s ease-out forwards;animation-delay:var(--d,0s)}
+.vtb{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:min(240px,70%)}
+.vtb i{height:16px;border-radius:5px;background:var(--line);opacity:0;animation:rise .45s ease-out forwards;animation-delay:var(--d,0s)}
+.vtb i.h{background:var(--brand);height:14px}
+.vbar{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);animation:barUp .8s cubic-bezier(.3,1.2,.5,1) forwards;animation-delay:var(--d,0s)}
+.vneedle{transform-origin:100px 82px;animation:vneedle 3s ease-in-out infinite alternate}
+.vdot{animation:vpulse 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.paused .vbar,.paused .vt,.paused .vwarn i,.paused .vneedle,.paused .vdot,.paused .vck i,.paused .vtb i{animation-play-state:paused}
+@keyframes vbob{50%{transform:translateY(-7px)}}
+@keyframes vpulse{50%{transform:scale(1.18)}}
+@keyframes vspin{to{transform:rotate(360deg)}}
+@keyframes vshake{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes vtilt{0%,100%{transform:rotate(-13deg)}50%{transform:rotate(13deg)}}
+@keyframes vslide{0%,100%{transform:translateX(-14px)}50%{transform:translateX(14px)}}
+@keyframes vflip{50%{transform:rotateY(180deg)}}
+@keyframes vgrow{0%,100%{transform:scale(.8)}50%{transform:scale(1.3)}}
+@keyframes vshrink{0%,100%{transform:scale(1.2)}50%{transform:scale(.7)}}
+@keyframes vnudge{50%{transform:translateX(5px)}}
+@keyframes vdrop{0%{transform:translateY(-34px);opacity:0}25%{opacity:1}65%,100%{transform:none;opacity:1}}
+@keyframes vring{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+@keyframes vgrowx{to{transform:scaleX(1)}}
+@keyframes vneedle{from{transform:rotate(-55deg)}to{transform:rotate(55deg)}}
+@media (prefers-reduced-motion: reduce){.vt,.vt.va,.vwarn i,.vneedle,.vdot{animation:none!important;opacity:1}.vck i,.vtb i,.vbar{animation:none;transform:none;opacity:1}}
+@media (max-width:520px){.vis{height:84px;gap:6px}}
 
 </style>
 </head>
@@ -668,6 +715,99 @@ const interp=(a,n)=>{const out=[];for(let i=0;i<n;i++){const p=i/(n-1)*(a.length
 const L=(id,title,scenes,recap)=>({type:'lesson',id,title,recap,scenes:scenes.map(s=>({title:s[0],cap:s[1],art:'gen',d:s[2],minMs:Math.min(9500,4500+s[1].length*12)}))});
 const Z=(id,title,qs)=>({type:'quiz',id,title,questions:qs.map(q=>({q:q[0],o:[q[1],q[2],q[3],q[4]],a:0,why:q[5]}))});
 const CH=(id,title,blurb,items)=>({id,title,blurb,items});
+
+/* ---------- motion visuals for text-heavy steps (language-free) ---------- */
+const VR={
+ ipo:['🏢:bob','→','📄:pulse','→','👥:bob','💰:pulse'],
+ exch:['🧑‍💼:bob','⇄','🏛️:pulse','⇄','👩‍💼:bob'],
+ trade:['🧑‍💼:bob','🏷️:pulse','⇄','💵:bob','👩‍💼:bob'],
+ clock:['⏰:shake','→','⏳:flip','→','✅:pulse'],
+ cal:['📅:flip','→','🔔:shake'],
+ scale:['⚖️:tilt'],
+ shield:['🛡️:pulse'],
+ doc:['📄:bob','🔍:slide','📊:pulse'],
+ magn:['📑:bob','🔍:slide','✅:pulse'],
+ gear:['🤖:bob','→','⚙️:spin','→','📈:pulse'],
+ lock:['💰:drop','→','🔒:pulse','→','🏦:bob'],
+ coin:['🪙:drop','🪙:drop','🪙:drop','👛:bob'],
+ target:['🏹:slide','🎯:pulse'],
+ brain:['😨:flip','🧠:pulse','😀:flip'],
+ globe:['🌍:spin','💵:bob','🛢️:bob'],
+ commod:['🥇:bob','🛢️:bob','🌾:bob'],
+ people:['👨‍👩‍👧:bob','👥:bob','🧑‍💼:bob'],
+ bank:['🏦:pulse','⇄','💵:bob'],
+ phone:['📱:bob','→','🏛️:pulse','→','✅:pulse'],
+ chain:['🔗:pulse'],
+ split:['🍕:pulse','→','✂️:shake','→','🍕:bob','🍕:bob'],
+ learn:['📘:bob','→','💡:pulse']
+};
+const VPATH={
+ wave_up:'M5,66 L35,56 L60,62 L90,42 L120,48 L160,26 L195,12',
+ wave_dn:'M5,12 L35,24 L60,18 L90,40 L120,34 L160,58 L195,68',
+ wave_zig:'M5,40 L30,22 L55,56 L80,26 L105,54 L130,28 L155,52 L195,38',
+ wave_spike:'M5,52 L40,50 L60,10 L80,70 L100,28 L130,60 L195,44'};
+const VTOK=(s,i)=>{const [c,a]=s.split(':'),d=(.15+i*.35).toFixed(2)+'s';
+  if(/^[→⇄←]$/.test(c))return `<span class="vt va" style="--d:${d}">${c}</span>`;
+  return `<span class="vt ${a==='drop'?'drop':'pop'} ${a||''}" style="--d:${d}">${c}</span>`};
+function visSvg(k){
+  if(VPATH[k]){const up=k==='wave_up',end=VPATH[k].split(' ').pop().split(',');
+    return `<svg viewBox="0 0 200 80" aria-hidden="true"><line x1="4" x2="196" y1="76" y2="76" stroke="var(--line)" stroke-width="2"/><path class="draw" pathLength="100" style="--len:100;--d:.2s" d="${VPATH[k]}" fill="none" stroke="${k==='wave_dn'?'var(--ared)':up?'var(--aleaf)':'var(--agold)'}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle class="pop vdot" style="--d:1.2s" cx="${end[0].slice(1)}" cy="${end[1]}" r="5.5" fill="var(--agold)" stroke="var(--aline)" stroke-width="1.5"/></svg>`}
+  if(k==='barsup'||k==='barsdn'){const h=[26,38,32,52,64,78];if(k==='barsdn')h.reverse();
+    return `<svg viewBox="0 0 200 90" aria-hidden="true">${h.map((v,i)=>`<rect class="vbar" style="--d:${(.15+i*.18).toFixed(2)}s" x="${14+i*30}" y="${86-v}" width="20" height="${v}" rx="4" fill="${k==='barsup'?'var(--aleaf)':'var(--ared)'}"/>`).join('')}</svg>`}
+  if(k==='gauge')return `<svg viewBox="0 0 200 100" aria-hidden="true"><path d="M30,82 A70,70 0 0 1 77,17" fill="none" stroke="var(--aleaf)" stroke-width="12" stroke-linecap="round"/><path d="M85,14 A70,70 0 0 1 115,14" fill="none" stroke="var(--agold)" stroke-width="12" stroke-linecap="round"/><path d="M123,17 A70,70 0 0 1 170,82" fill="none" stroke="var(--ared)" stroke-width="12" stroke-linecap="round"/><g class="vneedle"><line x1="100" y1="82" x2="100" y2="28" stroke="var(--aline)" stroke-width="4" stroke-linecap="round"/></g><circle cx="100" cy="82" r="7" fill="var(--aline)"/></svg>`;
+  if(k==='pie'){const seg=[['var(--ateal)',45],['var(--agold)',30],['var(--ablue)',25]];let off=0;
+    return `<svg viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(-90 50 50)">${seg.map(([c,l],i)=>{const o=off;off+=l;return `<circle class="draw" pathLength="100" style="--len:${l};--d:${(.2+i*.5).toFixed(1)}s;stroke-dasharray:${l} 100;stroke-dashoffset:${-o}" cx="50" cy="50" r="30" fill="none" stroke="${c}" stroke-width="22"/>`}).join('')}</g></svg>`}
+  if(k==='candles'){return candleSvg([[40,52,36,48],[48,60,44,56],[56,58,46,50],[50,66,48,62],[62,74,58,70],[70,80,66,76]],{w:200,h:90})}
+  return ''}
+function visHTML(k){
+  if(k==='warn')return `<div class="vwarn"><i style="--d:0s"></i><i style="--d:.9s"></i><span class="vt pop pulse" style="--d:.1s">⚠️</span></div>`;
+  if(k==='check')return `<div class="vck">${[0,1,2].map(i=>`<div><b class="pop" style="--d:${(.2+i*.5).toFixed(1)}s">✅</b><i style="--d:${(.3+i*.5).toFixed(1)}s;width:${[100,78,90][i]}%"></i></div>`).join('')}</div>`;
+  if(k==='table')return `<div class="vtb">${[...Array(9)].map((_,i)=>`<i class="${i<3?'h':''}" style="--d:${(.1+i*.12).toFixed(2)}s"></i>`).join('')}</div>`;
+  if(VR[k])return VR[k].map(VTOK).join('');
+  return visSvg(k)}
+/* which picture goes with which step: key = lesson id . step number */
+const VMAP_SRC={
+ ipo:'c3l1.1',
+ exch:'c3l2.0 f2l1.1 c8l4.2',
+ trade:'c3l3.0 c5l3.0 c5l3.2 f5l1.2',
+ globe:'c3l3.1 c9l2.1 c9l2.2 m4l1.2 m4l4.2',
+ wave_zig:'c3l3.2 t5l2.1 t2l3.2',
+ scale:'c4l1.0 c5l2.2 c6l1.2 c6l2.1 c6l3.1 c9l2.0 t5l3.1 f2l2.2 f3l3.0 f4l1.0 f5l1.1 f7l1.1 f7l2.0 f7l2.1 f8l3.1 f8l3.2 f9l2.1 f10l1.1 s1l1.1 s1l2.1 s2l2.2 s4l1.2 s4l2.2 s5l2.1 a2l2.1 m2l1.1 m3l1.1 m3l2.2 m4l1.0 m4l4.0 x2l1.1 x2l2.2 u1l1.1 u1l3.0 u2l1.2 u3l1.2 u3l3.0 u4l1.0 u4l3.1 u6l2.1 fpl2.0',
+ clock:'c4l1.1 c5l1.0 c5l1.1 t1l1.1 m1l2.0 s4l3.1',
+ target:'c4l1.2 f4l1.1 f6l1.0 x1l1.0',
+ bank:'c4l2.1 c9l1.1 u6l1.1',
+ shield:'c4l3.0 c7l3.0 t2l2.2 f1l2.0 f4l2.1 f4l2.2 s3l1.2 s5l1.2 a3l2.0 m1l1.2 x1l2.2 c5l4.2 u3l1.1 u3l2.1 u3l3.1 u6l1.2 csl2.2',
+ lock:'c4l3.2 f3l2.1 f3l2.2 f10l1.2 csl1.2 pll1.0',
+ phone:'c5l2.0',
+ table:'c5l3.1 c8l3.2 c9l3.2 f2l1.0 f3l1.1 f4l3.0 f4l3.1 f6l1.1 f6l1.2 f6l2.0 f7l1.2 f8l1.1 f8l4.1 f8l4.2 s1l1.0 s4l1.0 s4l2.0 m2l1.0 u4l3.0 pll2.0',
+ pie:'c6l1.0 c6l2.2 c7l2.0 c7l2.2 c8l1.2 u2l1.0 u2l1.1 u2l2.0',
+ barsup:'c6l1.1 c7l3.1 c9l1.0 t4l1.1 t4l1.2 u6l2.0',
+ gauge:'c6l2.0 f8l4.0 f9l1.1 f9l2.0 u3l3.2 u6l2.2',
+ coin:'c7l1.1 c8l1.1 f10l2.0 u1l2.1',
+ magn:'c7l2.1 c7l3.2 t3l1.1 t5l3.2 f4l1.2 f6l2.1 m2l2.0 u1l3.1 u2l2.2 u4l1.1',
+ split:'c8l2.2 c8l3.1',
+ commod:'c6l3.0 f2l2.1 m1l1.1 m2l2.1 m4l2.0 m4l2.1 m4l2.2',
+ candles:'t1l1.2 t1l2.1',
+ wave_up:'t3l1.2 t2l3.0 t2l3.1',
+ chain:'t6l2.0 f1l1.1 f3l1.0 m3l2.1 fpl1.1',
+ learn:'t6l2.2 x3l2.2 fpl2.2 pcl1.1 pcl1.2',
+ wave_spike:'t5l2.2 f1l2.1 f8l2.1 s1l2.0',
+ cal:'f2l1.2 f6l2.2 a2l2.0 m1l2.1 pll2.2 s5l4.1',
+ brain:'f9l1.2 x2l1.0 x3l1.0 x3l1.1 x2l4.0 x2l4.1',
+ doc:'f10l2.1 f10l3.0 u1l1.0 u3l2.2 x2l2.0',
+ gear:'a1l1.1 a1l2.0 a1l2.1 a3l1.0',
+ people:'u3l2.0 s5l4.2',
+ barsdn:'x1l2.1',
+ check:'f10l3.1 s1l2.2 s5l2.2 a2l1.1 a2l2.2 a3l1.1 a3l2.2 m3l1.2 x1l1.1 x2l1.2 x2l2.1 x3l1.2 x3l2.0 x3l2.1 x2l4.2 u1l1.2 u1l3.2 u3l1.0 csl2.1'
+};
+const VMAP={};Object.keys(VMAP_SRC).forEach(k=>VMAP_SRC[k].split(' ').forEach(id=>{if(id)VMAP[id]=k}));
+const VKIND={pts:'learn',steps:'check',cmp:'scale',big:'learn',warn:'warn',stats:'barsup',tbl:'table'};
+const VLEVEL={l1:'learn',l2:'doc',l3:'wave_up',l4:'chain',l5:'scale',l6:'gear',l7:'commod',l8:'shield'};
+function visFor(L,i,sc,lv){
+  if(sc.art!=='gen'||!sc.d||!VKIND[sc.d.k])return '';
+  let k=VMAP[`${L.id}.${i}`];
+  if(!k)k=sc.d.k==='warn'?'warn':(sc.d.k==='pts'||sc.d.k==='big')?(VLEVEL[lv]||'learn'):VKIND[sc.d.k];
+  const h=visHTML(k);return h?`<div class="vis" aria-hidden="true" data-v="${k}">${h}</div>`:''}
 
 
 /* =============================================================
@@ -1825,12 +1965,20 @@ Object.assign(TRUI.hi,{"Search a topic: MCX, algo, options":"विषय खो
 Object.assign(TRUI.kn,{"Search a topic: MCX, algo, options":"ವಿಷಯ ಹುಡುಕಿ: MCX, algo, options","No matching lesson. Try another word.":"ಯಾವುದೇ ಪಾಠ ಸಿಗಲಿಲ್ಲ. ಬೇರೆ ಪದ ಪ್ರಯತ್ನಿಸಿ."});
 Object.assign(TRUI.te,{"Search a topic: MCX, algo, options":"అంశం వెతకండి: MCX, algo, options","No matching lesson. Try another word.":"పాఠం దొరకలేదు. మరో పదం ప్రయత్నించండి."});
 Object.assign(TRUI.ta,{"Search a topic: MCX, algo, options":"தலைப்பைத் தேடுங்கள்: MCX, algo, options","No matching lesson. Try another word.":"பாடம் கிடைக்கவில்லை. வேறு சொல்லை முயலுங்கள்."});
+Object.assign(TRUI.hi,{"Resume":"यहाँ से जारी रखें","Step":"चरण"});
+Object.assign(TRUI.kn,{"Resume":"ಇಲ್ಲಿಂದ ಮುಂದುವರಿಸಿ","Step":"ಹಂತ"});
+Object.assign(TRUI.te,{"Resume":"ఇక్కడి నుండి కొనసాగించండి","Step":"దశ"});
+Object.assign(TRUI.ta,{"Resume":"இங்கிருந்து தொடருங்கள்","Step":"படி"});
 
 
 const FLOW=[];
 LEVELS.forEach((lv,li)=>lv.chapters.forEach((c,ci)=>c.items.forEach((it,ii)=>FLOW.push({lv,li,ch:c,ci,it,first:ii===0}))));
 const fi=id=>FLOW.findIndex(f=>f.it.id===id);
 const chNo=(f)=>f.lv.chapters.indexOf(f.ch)+1;
+const chLab=(f)=>(LEVELS.indexOf(f.lv)+1)+String.fromCharCode(97+f.lv.chapters.indexOf(f.ch));
+const itLab=(f)=>chLab(f)+'.'+(f.it.type==='quiz'?'Q':f.ch.items.indexOf(f.it)+1);
+const navChLab=(lv,c)=>(LEVELS.indexOf(lv)+1)+String.fromCharCode(97+lv.chapters.indexOf(c));
+const navItLab=(lv,c,it)=>navChLab(lv,c)+'.'+(it.type==='quiz'?'Q':c.items.indexOf(it)+1);
 const levelItems=lv=>lv.chapters.reduce((a,c)=>a+c.items.length,0);
 const levelDone=lv=>lv.chapters.reduce((a,c)=>a+c.items.filter(i=>P.done[i.id]).length,0);
 
@@ -1896,8 +2044,8 @@ function resultsHTML(q){const r=searchFlow(q);if(!r)return '';
   if(!r.length)return `<p class="sempty">${esc(t('No matching lesson. Try another word.'))}</p>`;
   let out='',last=null;
   r.slice(0,80).forEach(i=>{const f=FLOW[i];
-    if(f.ch!==last){last=f.ch;out+=`<div class="sr-c">${esc(t(f.lv.short))} · ${esc(t(f.ch.title))}</div>`}
-    out+=`<button class="srh" data-id="${f.it.id}">${f.it.type==='quiz'&&!/quiz/i.test(f.it.title)?esc(t('Quiz'))+': ':''}${esc(titleOf(f.it))}</button>`});
+    if(f.ch!==last){last=f.ch;out+=`<div class="sr-c">${esc(t(f.lv.short))} · ${chLab(f)} ${esc(t(f.ch.title))}</div>`}
+    out+=`<button class="srh" data-id="${f.it.id}"><span class="nlab">${itLab(f)}</span>${f.it.type==='quiz'&&!/quiz/i.test(f.it.title)?esc(t('Quiz'))+': ':''}${esc(titleOf(f.it))}</button>`});
   return out}
 function searchBox(cls){const ph=esc(t('Search a topic: MCX, algo, options'));
   return `<div class="sbox ${cls||''}">${ico('search')}<input class="sq" type="search" autocomplete="off" enterkeyhint="search" placeholder="${ph}" aria-label="${ph}"></div>`}
@@ -1911,7 +2059,7 @@ function renderNav(){
   side.innerHTML=`<h4>${t('Course map')}<button class="ib" style="width:36px;height:36px;display:grid" id="navClose" aria-label="Hide course map" title="Hide course map">${ico('close')}</button></h4>`+searchBox()+`<div id="sres"></div><div id="stree">`+
   LEVELS.map(lv=>{const ready=levelItems(lv)>0;const open=P.open[lv.id]!==undefined?P.open[lv.id]:(ready);
    return `<div class="lv ${ready?'live':''} ${open?'open':''}" data-lv="${lv.id}"><button class="lv-h" aria-expanded="${open}"><span class="lv-n">${LEVELS.indexOf(lv)+1}</span><span>${esc(t(lv.short))}</span>${ico('chev','chev')}</button><div class="lv-b">`+
-   lv.chapters.map(c=>`<div class="nc ${c.items.length?'':'soon'}"><div class="nc-t">${esc(t(c.title))}</div>${c.items.map(it=>`<button class="ni ${it.id===cur?'cur':''} ${P.done[it.id]?'done':''}" data-id="${it.id}"><span class="dot">${P.done[it.id]?ico('check'):''}</span>${esc(titleOf(it))}</button>`).join('')}</div>`).join('')+`</div></div>`}).join('')+`</div>`;
+   lv.chapters.map(c=>`<div class="nc ${c.items.length?'':'soon'}"><div class="nc-t"><span class="nlab">${navChLab(lv,c)}</span>${esc(t(c.title))}</div>${c.items.map(it=>`<button class="ni ${it.id===cur?'cur':''} ${P.done[it.id]?'done':''}" data-id="${it.id}"><span class="dot">${P.done[it.id]?ico('check'):''}</span><span class="nlab">${navItLab(lv,c,it)}</span>${esc(titleOf(it))}</button>`).join('')}</div>`).join('')+`</div></div>`}).join('')+`</div>`;
   searchBind($('.sbox',side),$('#sres'),()=>[$('#stree')]);
   $$('.lv-h',side).forEach(b=>b.onclick=()=>{const lv=b.parentElement,id=lv.dataset.lv,o=!lv.classList.contains('open');lv.classList.toggle('open',o);b.setAttribute('aria-expanded',o);P.open[id]=o;save()});
   $$('.ni',side).forEach(b=>b.onclick=()=>{closeNav();go(fi(b.dataset.id),{skipIntro:true})});
@@ -1927,7 +2075,7 @@ function home(){
   const lessons=FLOW.filter(f=>f.it.type==='lesson').length;
   main.innerHTML=`<section class="card hero"><span class="kick">${t('Free course · Simple language')}</span><h1>${t('Learn the stock market, step by step')}</h1>
    <p>${t('Short animated lessons with a friendly voice. Start from zero and grow up to futures, options, algo trading and commodities.')}</p>
-   <button class="btn primary lg" id="start">${ico('play')} ${started?t('Continue learning'):t('Start learning')}</button></section>
+   <button class="btn primary lg" id="start">${ico('play')} ${started?t('Continue learning'):t('Start learning')}</button>${(()=>{const r=P.last?fi(P.last):-1;return started&&r>=0?`<p class="rsm">${esc(t('Resume'))}: ${itLab(FLOW[r])} · ${esc(titleOf(FLOW[r].it))}${P.si>0&&FLOW[r].it.type==='lesson'?' · '+esc(t('Step'))+' '+(P.si+1):''}</p>`:''})()}</section>
    <div class="stats"><div class="card stat"><b>${done}/${total}</b><span>${t('Completed')}</span></div><div class="card stat"><b>${lessons}</b><span>${t('Lessons ready')}</span></div><div class="card stat"><b>${LEVELS.length}</b><span>${t('Modules')}</span></div></div>
    ${searchBox('home')}<div id="hres" class="hres" style="display:none"></div>
    <h2 class="section-t" id="hlv">${t('Course levels')}</h2>
@@ -1935,7 +2083,7 @@ function home(){
     return `<button class="lvc ${tot?'':'soon'}" data-lv="${lv.id}" ${tot?'':'disabled'}><div class="lvc-top"><span class="ring" style="--p:${pr}"><span>${tot?pr+'%':n+1}</span></span><div><h3>${esc(t(lv.title))}</h3><small>${lv.chapters.length} ${t('chapters')}</small></div></div><p>${esc(t(lv.blurb))}</p><span class="tag ${tot?'live':''}">${tot?t('Available'):t('Coming soon')}</span></button>`}).join('')}</div>
    <p class="tip">${t('Tip: use Chrome, Edge, Safari or Firefox and turn the volume up. Tap the language or settings button at the top to change the voice or speed.')}</p>`;
   searchBind($('.sbox.home',main),$('#hres'),()=>[$('#hlv'),$('#hgrid')]);
-  $('#start').onclick=()=>{TTS.unlock();const i=P.last?fi(P.last):0;go(i<0?0:i,{})};
+  $('#start').onclick=()=>{TTS.unlock();const i=P.last?fi(P.last):0;go(i<0?0:i,{si:i>=0&&P.si>0?P.si:0})};
   $$('.lvc:not(.soon)').forEach(b=>b.onclick=()=>{TTS.unlock();const lv=LEVELS.find(l=>l.id===b.dataset.lv);const f=FLOW.findIndex(x=>x.lv===lv);go(f,{})});
   renderNav();chrome();window.scrollTo(0,0);
 }
@@ -1943,20 +2091,20 @@ function home(){
 function go(i,o={}){
   stopAll();closeNav();
   if(i>=FLOW.length||i<0)return soon();
-  idx=i;P.last=FLOW[i].it.id;save();
+  idx=i;P.last=FLOW[i].it.id;P.si=o.si||0;save();
   const f=FLOW[i];
-  if(f.first&&!o.skipIntro)return chapterIntro(i);
-  if(f.it.type==='lesson'){si=o.lastScene?f.it.scenes.length-1:0;playing=true;lessonShell()}else quizStart();
+  if(f.first&&!o.skipIntro&&!o.si)return chapterIntro(i);
+  if(f.it.type==='lesson'){si=o.lastScene?f.it.scenes.length-1:Math.min(o.si||0,f.it.scenes.length-1);playing=true;lessonShell()}else quizStart();
   renderNav();
 }
 
 function chapterIntro(i){
   view='chapter';const f=FLOW[i];renderNav();
-  main.innerHTML=`<section class="card cardc"><span class="tag live">${esc(t(f.lv.short))}</span><div class="bignum">${chNo(f)}</div><h2>${esc(t(f.ch.title))}</h2><p style="color:var(--muted);font-weight:600">${esc(t(f.ch.blurb||''))}</p>
+  main.innerHTML=`<section class="card cardc"><span class="tag live">${esc(t(f.lv.short))}</span><div class="bignum">${chLab(f)}</div><h2>${esc(t(f.ch.title))}</h2><p style="color:var(--muted);font-weight:600">${esc(t(f.ch.blurb||''))}</p>
    <div class="btnrow"><button class="btn primary lg" id="cgo">${t('Start chapter')} ${ico('next')}</button><button class="btn" id="chome">${t('All levels')}</button></div><div class="count" id="cc"></div></section>`;
   $('#cgo').onclick=()=>go(i,{skipIntro:true});$('#chome').onclick=home;
   window.scrollTo(0,0);
-  const say=`${t('Chapter')} ${chNo(f)}. ${t(f.ch.title)}.`;
+  const say=`${t('Chapter')} ${chLab(f)}. ${t(f.ch.title)}.`;
   const after=()=>{if(SET.auto&&view==='chapter')countdown(3,'#cc',t('Starting in'),()=>go(i,{skipIntro:true}))};
   if(!(SET.sound&&TTS.speak(speakable(say),LANG(),after)))later(after,1800);
 }
@@ -1967,8 +2115,8 @@ function countdown(n,sel,label,fn){
 /* ---------- lesson ---------- */
 function lessonShell(){
   view='lesson';const f=FLOW[idx],L=f.it;
-  main.innerHTML=`<div class="crumbs"><button id="bHome">${t('All levels')}</button><span>›</span><span>${esc(t(f.lv.short))}</span><span>›</span><span>${t('Chapter')} ${chNo(f)}</span></div>
-   <h1 class="ltitle">${esc(titleOf(L))}</h1>
+  main.innerHTML=`<div class="crumbs"><button id="bHome">${t('All levels')}</button><span>›</span><span>${esc(t(f.lv.short))}</span><span>›</span><span>${t('Chapter')} ${chLab(f)}</span></div>
+   <h1 class="ltitle"><span class="lnum">${itLab(f)}</span> ${esc(titleOf(L))}</h1>
    <div class="segs" id="segs" role="progressbar" aria-label="Lesson progress">${L.scenes.map(()=>'<i></i>').join('')}</div>
    <div class="card stage art" id="stage"></div>
    <div class="card sub" aria-live="polite">${ico('speaker')}<span id="subtxt"></span></div>
@@ -1992,8 +2140,8 @@ function step(d){
 }
 function showScene(){
   stopAll();const L=FLOW[idx].it,sc=L.scenes[si];const tok=++sceneTok;
-  const tx=sceneText(L,si);
-  $('#stage').innerHTML=`<h2 class="s-title">${esc(tx.title)}</h2><div class="s-art">${ART[sc.art](sc.d)}</div>`;
+  const tx=sceneText(L,si);P.last=L.id;P.si=si;save();
+  $('#stage').innerHTML=`<h2 class="s-title">${esc(tx.title)}</h2>${visFor(L,si,sc,FLOW[idx].lv.id)}<div class="s-art">${ART[sc.art](sc.d)}</div>`;
   if(INIT[sc.art])INIT[sc.art]();
   $('#subtxt').textContent=tx.cap;$('#crumb').textContent=`${si+1} / ${L.scenes.length}`;
   $('#segs').setAttribute('aria-valuenow',si+1);$('#segs').setAttribute('aria-valuemax',L.scenes.length);
@@ -2009,7 +2157,7 @@ function showScene(){
   if(!spoke)later(()=>{sd=true;check()},Math.max(3000,words*430));
 }
 function lessonEnd(){
-  stopAll();view='end';const f=FLOW[idx],L=f.it;P.done[L.id]=1;P.last=L.id;save();renderNav();
+  stopAll();view='end';const f=FLOW[idx],L=f.it;P.done[L.id]=1;P.last=(FLOW[idx+1]?FLOW[idx+1].it.id:L.id);P.si=0;save();renderNav();
   const nl=nextLabel(idx),hasNext=idx+1<FLOW.length;
   const rc=(i)=>{const lg=LANG(),tr=lg!=='en'&&TR[lg]&&TR[lg][L.id+'.recap'];return tr?tr.list:L.recap};
   const rl=rc();
